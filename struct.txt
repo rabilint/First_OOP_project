@@ -1,4 +1,0 @@
-struct money {
-   int grn;
-   short kop;
-};
