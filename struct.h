@@ -1,9 +1,9 @@
 #ifndef STRUCT_H
 #define STRUCT_H
 
-struct goods {
+struct Goods {
    int grn;
    short int kop;
 };
-goods calculate(goods price);
+Goods calculate();
 #endif // STRUCT_H

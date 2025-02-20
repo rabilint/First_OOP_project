@@ -2,10 +2,10 @@
 #include "struct.h"
 #include <fstream>
 
+Goods calculate() {
+    Goods result{0, 0};
 
-goods calculate(goods price) {
-    goods result{0, 0};
-
+    Goods price{0, 0};
     int amount=1;
     int n =100;
     char* file = new char[n +1];
