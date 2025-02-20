@@ -1,47 +1,49 @@
 #include <iostream>
-#include <cstdio>
 #include "struct.h"
+#include <fstream>
+
 
 goods calculate(goods price) {
-    goods result{0, 0, 0};
+    goods result{0, 0};
 
-    bool end = false;
-    char array[50];
+    int amount=1;
+    int n =100;
+    char* file = new char[n +1];
+    std::ifstream inFile;
+    inFile.open("/home/rabilint/CLionProjects/untitled/input.txt");
 
-    while (!end) {
+    if (!inFile || !inFile.is_open()) {
+        std::cout << "Unable to open file";
+        exit(1); // terminate with error
+    }
+
+    while (inFile.getline(file,n,';')) {
         int total;
-        std::cout << "Будь ласка, напишіть ціну та кількість товару через кому (наприклад, 19,89,3):";
-        std::cin.getline(array, sizeof array);
 
-        if (sscanf(array, "%d,%d,%d", &price.grn, &price.kop, &price.amount) != 3) {
-            std::cout << "Дотримуйтесь інструкцій" << std::endl;
-            continue;
-        }
-        total = (price.kop + price.grn * 100) * price.amount;
-        result.grn += total / 100;
-        result.kop += total % 100;
-
-        int remainder;
-        remainder = result.kop % 10;
-        if (remainder >= 5)
-            result.kop += (10 - remainder);
-        else
-            result.kop -= remainder;
-
-        if (result.kop >= 100) {
-            result.grn += result.kop / 100;
-            result.kop %= 100;
-        }
-
-        std::cout << "Хочете продовжити?";
-        char answer;
-        std::cin >> answer;
-        std::cin.ignore();
-        if (answer == 'N' || answer == 'n') {
-            end = true;
+        if (sscanf(file, "%*[^,], %d грн %d коп, %d шт;", &price.grn, &price.kop, &amount) == 3) {
+            total = (price.kop + price.grn * 100) * amount;
+            result.grn += total / 100;
+            result.kop += total % 100;
+        }else {
+            std::cout << "Помилка! Неправильний формат рядка:\n" << file << std::endl;
+            std::cout << "Очікуваний формат: Назва, X грн Y коп, Z шт;\n";
+            break;
         }
     }
-    std::cout << "Фінальна сума: " << result.grn << " грн " << result.kop << " коп\n";
+    std::cout << "Фінальна сума без округлення: " << result.grn << " грн " << result.kop << " коп\n";
+    int remainder;
+    remainder = result.kop % 10;
+    if (remainder >= 5)
+        result.kop += (10 - remainder);
+    else
+        result.kop -= remainder;
 
+    if (result.kop >= 100) {
+        result.grn += result.kop / 100;
+        result.kop %= 100;
+    }
+    std::cout << "Фінальна сума з округленням: " << result.grn << " грн " << result.kop << " коп\n";
+    inFile.close();
+    delete[] file;
     return result;
 }

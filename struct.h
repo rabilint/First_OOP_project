@@ -3,8 +3,7 @@
 
 struct goods {
    int grn;
-   short kop;
-   int amount;
+   short int kop;
 };
-
+goods calculate(goods price);
 #endif // STRUCT_H
