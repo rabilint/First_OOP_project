@@ -1,6 +1,4 @@
-#include <iostream>
-
-#include "struct.h"
+#include "action.h"
 
 int main() {
 

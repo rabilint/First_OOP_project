@@ -1,5 +1,5 @@
 #include <iostream>
-#include "struct.h"
+#include "action.h"
 #include <fstream>
 
 Goods calculate() {
